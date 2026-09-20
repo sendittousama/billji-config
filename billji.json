@@ -1,7 +1,27 @@
 {
-  "id": "news-2026-09-21",
-  "title": "BillJi 1.2 is here",
-  "body": "Water bills from 8 more companies.",
-  "notify": true,
-  "until": "2026-10-31"
+  "announcements": [
+    {
+      "id": "update-2026-09-20",
+      "title": "BillJi 1.2 is out",
+      "body": "Faster bill fetching, a new look, and load-shedding timings you can set yourself.",
+      "title_ur": "BillJi 1.2 آ گیا",
+      "body_ur": "بل تیزی سے، نیا انداز، اور لوڈشیڈنگ کے اوقات اپنی مرضی سے۔",
+      "url": "",
+      "button": "",
+      "notify": true,
+      "until": "2026-10-31"
+    },
+    {
+      "id": "welcome-2026-09",
+      "title": "Welcome to BillJi",
+      "body": "All your electricity, gas, water, phone and internet bills in one place. Tell your family!",
+      "title_ur": "BillJi میں خوش آمدید",
+      "body_ur": "آپ کے تمام بل ایک جگہ۔ اپنے گھر والوں کو بھی بتائیں!",
+      "url": "",
+      "button": "",
+      "notify": false,
+      "until": "2026-12-31"
+    }
+  ],
+  "rates": { "net_metering": 26, "net_billing": 11 }
 }
