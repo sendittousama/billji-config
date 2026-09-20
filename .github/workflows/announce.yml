@@ -36,7 +36,7 @@ jobs:
           if not to_send:
               print('Nothing marked "notify": true — nothing to send.')
               raise SystemExit(0)
-          a = to_send[-1]
+          a = to_send[0]
 
           creds = service_account.Credentials.from_service_account_info(
               key, scopes=["https://www.googleapis.com/auth/firebase.messaging"]
