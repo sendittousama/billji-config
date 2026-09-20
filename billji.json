@@ -1,19 +1,7 @@
-﻿{
-  "announcements": [
-    {
-      "test-1": "welcome-2026-09",
-      "title": "Welcome to BillJi",
-      "body": "All your electricity, gas, water, phone and internet bills in one place. Tell your family!",
-      "title_ur": "BillJi میں خوش آمدید",
-      "body_ur": "آپ کے تمام بل ایک جگہ۔ اپنے گھر والوں کو بھی بتائیں!",
-      "url": "",
-      "button": "",
-      "notify": true,
-      "until": "2026-12-31"
-    }
-  ],
-  "rates": {
-    "net_metering": 26,
-    "net_billing": 11
-  }
+{
+  "id": "news-2026-09-21",
+  "title": "BillJi 1.2 is here",
+  "body": "Water bills from 8 more companies.",
+  "notify": true,
+  "until": "2026-10-31"
 }
