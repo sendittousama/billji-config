@@ -1,0 +1,63 @@
+name: Announce to BillJi phones
+
+# Whenever billji.json changes, the newest announcement marked "notify": true is pushed to every phone
+# through Firebase. The phone shows it within seconds and re-reads the file for the full text and rates.
+on:
+  push:
+    paths:
+      - billji.json
+  workflow_dispatch:
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install --quiet google-auth requests
+
+      - name: Send the push
+        env:
+          FCM_KEY: ${{ secrets.FCM_KEY }}
+        run: |
+          python - <<'PY'
+          import json, os, requests
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import Request
+
+          key = json.loads(os.environ["FCM_KEY"])
+          config = json.load(open("billji.json", encoding="utf-8-sig"))
+
+          # Newest first, same as the card on the phone's home screen: the top "notify": true entry is sent.
+          to_send = [a for a in config.get("announcements", []) if a.get("notify")]
+          if not to_send:
+              print('Nothing marked "notify": true — nothing to send.')
+              raise SystemExit(0)
+          a = to_send[0]
+
+          creds = service_account.Credentials.from_service_account_info(
+              key, scopes=["https://www.googleapis.com/auth/firebase.messaging"]
+          )
+          creds.refresh(Request())
+
+          body = {
+              "message": {
+                  "topic": "all",
+                  # Data only: the app builds the notification itself, in the reader's language.
+                  "data": {k: str(a.get(k, "")) for k in ("id", "title", "body", "title_ur", "body_ur", "url", "button")},
+                  "android": {"priority": "HIGH"},
+              }
+          }
+          r = requests.post(
+              f"https://fcm.googleapis.com/v1/projects/{key['project_id']}/messages:send",
+              headers={"Authorization": f"Bearer {creds.token}"},
+              json=body, timeout=30,
+          )
+          print(r.status_code, r.text)
+          r.raise_for_status()
+          print("Sent:", a["id"], "-", a.get("title"))
+          PY
